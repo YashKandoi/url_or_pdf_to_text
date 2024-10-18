@@ -26,19 +26,22 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+          echo "Virtual environment activated: $VIRTUAL_ENV"
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
+        run: |
+          pip install -r requirements.txt
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./* -x venv/\*
+        run: |
+          zip -r release.zip ./* -x venv/\*
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
-          name: python-app
+          name: app
           path: release.zip
 
   deploy:
@@ -54,12 +57,11 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: python-app
+          name: app
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
