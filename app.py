@@ -332,5 +332,5 @@ def convert():
     else:
         return ocr_on_pdf_from_url(pdf_url)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
