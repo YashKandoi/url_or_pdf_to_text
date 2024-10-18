@@ -308,6 +308,10 @@ import os
 
 app = Flask(__name__)
 
+# @app.route('/')
+# def hello_world():
+#     return 'Hello, World!'
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -331,6 +335,7 @@ def convert():
         return response
     else:
         return ocr_on_pdf_from_url(pdf_url)
+
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
