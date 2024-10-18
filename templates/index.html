@@ -9,18 +9,26 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f4f4f4; /* Light theme background */
+            color: #000; /* Light theme text color */
+        }
+        body.dark {
+            background-color: #333; /* Dark theme background */
+            color: #fff; /* Dark theme text color */
         }
         h1 {
             text-align: center;
         }
         form {
-            background: #fff;
+            background: #fff; /* Light theme form background */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
+        }
+        body.dark form {
+            background: #444; /* Dark theme form background */
         }
         input[type="file"],
         input[type="url"],
@@ -43,7 +51,7 @@
         #result {
             margin-top: 20px;
             padding: 15px;
-            background: #fff;
+            background: #fff; /* Light theme result background */
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -52,6 +60,9 @@
             display: none; /* Initially hidden */
             max-height: 300px; /* Set a max height */
             overflow-y: auto; /* Enable vertical scrolling */
+        }
+        body.dark #result {
+            background: #444; /* Dark theme result background */
         }
         #loading {
             display: none; /* Initially hidden */
@@ -71,10 +82,21 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        /* Button styles */
+        #theme-toggle {
+            float: right;
+            margin-bottom: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px; /* Adjust size as needed */
+            color: inherit; /* Inherit text color */
+        }
     </style>
 </head>
 <body>
     <h1>PDF to Text Converter</h1>
+    <button id="theme-toggle" title="Toggle Dark Mode">🌙</button> <!-- Moon icon for dark mode -->
     <form id="pdf-form" action="/convert" method="post" enctype="multipart/form-data">
         <h2>Upload PDF File</h2>
         <input type="file" name="pdf_file" accept=".pdf">
@@ -89,7 +111,7 @@
     </div>
 
     <div id="result">
-        <button id="copy-button" style="float: right; margin-bottom: 10px;">Copy</button> <!-- Added copy button -->
+        <button id="copy-button" style="float: right; margin-bottom: 10px;">Copy</button>
         <h2>Conversion Result</h2>
         <pre id="result-text"></pre>
     </div>
@@ -97,7 +119,6 @@
     <script>
         document.getElementById('pdf-form').onsubmit = function(event) {
             event.preventDefault(); // Prevent the default form submission
-
             var formData = new FormData(this);
             var resultDiv = document.getElementById('result');
             var resultText = document.getElementById('result-text');
@@ -134,6 +155,14 @@
                 console.error('Could not copy text: ', err);
             });
         };
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark');
+            // Change the button text/icon based on the theme
+            this.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙'; // Sun icon for light mode
+        });
     </script>
 </body>
 </html>
